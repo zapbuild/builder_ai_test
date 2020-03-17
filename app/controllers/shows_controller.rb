@@ -4,9 +4,9 @@ class ShowsController < ApplicationController
   # GET /shows
   # GET /shows.json
   def index
-    @shows = Show.includes(:channel).all
+    @shows = Show.left_joins(:channel).all
     if params[:search].present?
-      @shows = @shows.where("lower(shows.name) LIKE (?) OR lower(channels.name) LIKE (?)","%#{params[:search].strip.downcase}%","%#{params[:search].strip.downcase}%").references(:channels)
+      @shows = @shows.where("lower(shows.name) LIKE (?) OR lower(channels.name) LIKE (?)","%#{params[:search].strip.downcase}%","%#{params[:search].strip.downcase}%")
     end
   end
  
