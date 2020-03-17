@@ -17,11 +17,7 @@ class ShowsController < ApplicationController
       @favourite.user_id = current_user.id
       @favourite.show_id = params[:show_id]
       if @favourite.save
-        p "=============--------------================"
-        p (@favourite.show.play_time - 30.minutes).inspect
-        p "=============--------------================="
         SendFavouriteShowWorker.perform_in(@favourite.show.play_time - 30.minutes, current_user.email, @favourite.show_id)
-        SendFavouriteShowWorker.perform_at(5.minutes.from_now, current_user.email, @favourite.show_id)
 
         flash[:success] = "Successfully marked as favourite"
       else
