@@ -1,0 +1,7 @@
+<h5>
+  Show Reminder
+</h5>
+<% show=Show.find_by(:id=>@show_id) %>
+<p> Channel Name: <%= show.channel.name %></p>
+<p> Show Name: <%= show.name %></p>
+<p>Show Time: <%= show.play_time %></p>

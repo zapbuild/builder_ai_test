@@ -1,0 +1,42 @@
+<div class ="">
+  <div class="search_form_div">
+    <%= form_tag shows_path, :method => 'get' do %>
+      <%= label_tag(:search , "Search by show name and channel name:") %>
+      <p>
+        <%= text_field_tag :search, params[:search] , :placeholder => 'Search by show name and channel name'  %>
+        <%= submit_tag "Search",  :name => nil%>
+        <% if params[:search].present? %>
+        <a href="<%= shows_path %>">Clear</a>
+          <% end %>
+      </p>
+    <% end %>
+  </div>
+  <table>
+    <tbody>
+    <tr>
+      <th>Id</th>
+      <th>Show Name</th>
+      <th>Channel Name</th>
+      <th>Show Timing</th>
+      <th>Action</th>
+    </tr>
+
+      <% @shows.each do |show| %>
+    <tr>
+      <td><%= show.id %></td>
+      <td><%= show.name %></td>
+      <td><%= show.channel.name %></td>
+      <td><%= show.play_time %></td>
+      <td>
+
+        <% unless show.favourites.pluck(:user_id).include?(current_user.id) %>
+        <%= link_to "Mark as Favourite", show_mark_as_favourite_path(:show_id => show.id)  , :method => "post" %>
+          <% end %>
+      </td>
+    </tr>
+      <% end %>
+
+    </tbody>
+  </table>
+
+</div>
